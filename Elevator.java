@@ -9,12 +9,17 @@ public class Elevator {
     public Elevator(List<ElevatorCar> cars, ControllerStrategy strategy) {
         this.cars = cars;
         this.strategy = strategy;
-        requests = new ArrayList<>();
+        this.requests = new ArrayList<>();
     }
 
+    // Single central method to request an elevator.
     public void callElevator(ElevatorRequest request) {
         requests.add(request);
-        strategy.notifyChange();
+    }
+
+    // Called by a central clock/tick or manually to process movement step
+    public void step() {
+        strategy.processRequests(cars, requests);
     }
 
 }
